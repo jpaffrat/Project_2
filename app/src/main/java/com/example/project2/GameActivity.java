@@ -154,8 +154,10 @@ public class GameActivity extends AppCompatActivity {
         }
 
 
-        //if (hitBoxX > RollY && hitBox.getX + hitBox.getWidth() / 2 < RollY
+        //if (hitBoxX > RollX && hitBoxX < hitBox.getWidth() < RollY
         //)
+
+
         if (hit){
             loseLife();
         }
