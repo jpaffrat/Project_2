@@ -34,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView Life2;
     private ImageView Life3;
     private TextView scoreBoard;
+    private TextView livesBoard;
 
     //Positions
     private float RockX;
@@ -69,6 +70,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         scoreBoard = (TextView)findViewById(R.id.Score_id);
+        livesBoard = (TextView)findViewById(R.id.Lives_id);
 
         Life1 = (ImageView)findViewById(R.id.Life1);
         Life2 = (ImageView)findViewById(R.id.Life2);
@@ -153,14 +155,31 @@ public class GameActivity extends AppCompatActivity {
             FireObY = -FireOb.getHeight();
         }
 
+        // Hit By Roll
+        if (hitBoxX < RollX + hitBox.getWidth() - 30 && hitBoxX + hitBox.getWidth() > RollX &&
+               hitBoxY < RollY + Roll.getHeight() - 20 && hitBoxY + hitBox.getHeight() > RollY){
+            loseLife();
+        }
 
-        //if (hitBoxX > RollX && hitBoxX < hitBox.getWidth() < RollY
-        //)
+        // Hit by Rock
+        if (hitBoxX < RockX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > RockX &&
+               hitBoxY < RockY + Roll.getHeight() && hitBoxY + hitBox.getHeight() > RockY){
+            loseLife();
+        }
+
+        // Hit by Fire
+        if (hitBoxX < FireObX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > FireObX &&
+                hitBoxY < FireObY + Roll.getHeight() && hitBoxY + hitBox.getHeight() > FireObY){
+            loseLife();
+        }
 
 
         if (hit){
             loseLife();
         }
+
+//        RockX = screenWidth / 2;
+//        RockY = screenHeight / 2;
 
         Rock.setX(RockX);
         Rock.setY(RockY);
@@ -173,15 +192,17 @@ public class GameActivity extends AppCompatActivity {
     private void loseLife(){
         lives -= 1;
 
-        if(lives == 2){
-            Life1.setVisibility(View.INVISIBLE);
-        } else if ( lives == 1){
-            Life2.setVisibility(View.INVISIBLE);
-        } else {
-            timer.cancel();
-            Life3.setVisibility(View.INVISIBLE);
-            //Do Dalton
-        }
+        livesBoard.setText(String.format("%d", lives));
+
+//        if(lives == 2){
+//            Life1.setVisibility(View.INVISIBLE);
+//        } else if ( lives == 1){
+//            Life2.setVisibility(View.INVISIBLE);
+//        } else {
+//            timer.cancel();
+//            Life3.setVisibility(View.INVISIBLE);
+//            //Do Dalton
+//        }
 
     }
 

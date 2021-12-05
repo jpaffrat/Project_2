@@ -93,6 +93,16 @@
                 android:textColor="@color/white"
                 android:textSize="34sp" />
 
+            <TextView
+                android:id="@+id/Lives_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
+
             <ImageView
                 android:id="@+id/Life1"
                 android:layout_width="wrap_content"
