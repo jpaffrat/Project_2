@@ -6,6 +6,7 @@ public class HighScore {
     public int score;
 
 
+
     public HighScore() {}
 
     public HighScore(String user, int score){
