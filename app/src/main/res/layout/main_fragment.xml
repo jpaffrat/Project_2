@@ -10,4 +10,10 @@
         android:layout_height="match_parent"
         android:text="Main" />
 
+    <Button
+        android:id="@+id/Start_game_button"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:text="Push to start the game" />
+
 </FrameLayout>

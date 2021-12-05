@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseFirestore.setLoggingEnabled(true);
         mFirestore = FirebaseUtil.getFirestore();
 
-
         // new HighscoreFragment().addHighScore("hello",1 , mFirestore);
     }
 
