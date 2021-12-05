@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wiiu_supersmashbros_stage10_screen_02"
     tools:context=".GameActivity">
 
 
@@ -14,6 +15,14 @@
         app:srcCompat="@drawable/angry_rock"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="240dp" />
+
+    <ImageView
+        android:id="@+id/Fire"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/inkedmp_840x830_matte_f8f8f8_t_pad_1000x1000_f8f8f8_li"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="130dp" />
 
     <ImageView
         android:id="@+id/Big_boulder"
@@ -52,15 +61,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Score"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/Score_id"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="0"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,24 +89,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Lives"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/Life1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/Life2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/Life3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"

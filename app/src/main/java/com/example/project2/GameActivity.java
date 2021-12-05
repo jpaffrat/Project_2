@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,13 +29,19 @@ public class GameActivity extends AppCompatActivity {
     //objects
     private ImageView Rock;
     private ImageView Roll;
+    private ImageView FireOb;
+    private ImageView Life1;
+    private ImageView Life2;
+    private ImageView Life3;
+    private TextView scoreBoard;
 
     //Positions
     private float RockX;
     private float RockY;
     private float RollX;
     private float RollY;
-    private float PlayerX;
+    private float FireObX;
+    private float FireObY;
 
     // Player
     private GestureDetector gestureDetector;
@@ -42,21 +49,38 @@ public class GameActivity extends AppCompatActivity {
     private ImageView hitBox;
     private float hitBoxX;
     private float hitBoxY;
+
+    //Score and live
     private int lives = 3;
+    private long time_int;
+    private long time_current;
+    private long time_elapsed;
 
     // Initialize Class
     private Handler handler = new Handler();
     private Timer timer = new Timer();
 
     // dummy var / delete later
-    private boolean hit = true;
+    private boolean hit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        scoreBoard = (TextView)findViewById(R.id.Score_id);
+
+        Life1 = (ImageView)findViewById(R.id.Life1);
+        Life2 = (ImageView)findViewById(R.id.Life2);
+        Life3 = (ImageView)findViewById(R.id.Life3);
+
         Rock = (ImageView)findViewById(R.id.Angry_Rock);
         Roll = (ImageView)findViewById(R.id.Big_boulder);
+        FireOb = (ImageView)findViewById(R.id.Fire);
+
+        RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
+        RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
+        FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
 
         //Get screen Size
         WindowManager wm = getWindowManager();
@@ -69,6 +93,7 @@ public class GameActivity extends AppCompatActivity {
         //Move to out of screen
         Rock.setX(-80.0f);
         Rock.setY(-80.0f);
+        FireOb.setY(-80.0f);
 
         //Move around player
         player = (ImageView) findViewById(R.id.Player_id);
@@ -91,6 +116,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         //Start the Timer
+        time_int = System.currentTimeMillis()/100;
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -98,6 +124,9 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         changePos();
+                        time_current = System.currentTimeMillis()/100;
+                        time_elapsed = time_current - time_int;
+                        scoreBoard.setText(String.format("%d", time_elapsed));
                     }
                 });
             }
@@ -118,6 +147,13 @@ public class GameActivity extends AppCompatActivity {
             RollY = -Roll.getHeight();
         }
 
+        FireObY += 10;
+        if (FireOb.getY() > screenHeight){
+            FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
+            FireObY = -FireOb.getHeight();
+        }
+
+
         //if (hitBoxX > RollY && hitBox.getX + hitBox.getWidth() / 2 < RollY
         //)
         if (hit){
@@ -128,12 +164,20 @@ public class GameActivity extends AppCompatActivity {
         Rock.setY(RockY);
         Roll.setX(RollX);
         Roll.setY(RollY);
+        FireOb.setX(FireObX);
+        FireOb.setY(FireObY);
     }
 
     private void loseLife(){
         lives -= 1;
 
-        if(lives == 0){
+        if(lives == 2){
+            Life1.setVisibility(View.INVISIBLE);
+        } else if ( lives == 1){
+            Life2.setVisibility(View.INVISIBLE);
+        } else {
+            timer.cancel();
+            Life3.setVisibility(View.INVISIBLE);
             //Do Dalton
         }
 
