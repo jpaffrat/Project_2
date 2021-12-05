@@ -6,4 +6,107 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+
+    <ImageView
+        android:id="@+id/Angry_Rock"
+        android:layout_width="83dp"
+        android:layout_height="91dp"
+        app:srcCompat="@drawable/angry_rock"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="240dp" />
+
+    <ImageView
+        android:id="@+id/Big_boulder"
+        android:layout_width="95dp"
+        android:layout_height="90dp"
+        app:srcCompat="@drawable/big_boulder"
+        tools:layout_editor_absoluteX="300dp"
+        tools:layout_editor_absoluteY="211dp" />
+
+    <ImageView
+        android:id="@+id/Player_id"
+        android:layout_width="150dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/rocket_player"
+        tools:layout_editor_absoluteX="134dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Score"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="0"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Lives"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/Hit_box_id"
+        android:layout_width="75dp"
+        android:layout_height="100dp"
+        android:foreground="@color/teal_200"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="331dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
