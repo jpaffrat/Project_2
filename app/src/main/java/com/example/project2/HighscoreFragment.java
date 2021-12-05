@@ -85,7 +85,7 @@ public class HighscoreFragment extends Fragment {
                 if(task.isSuccessful()){
 
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        //Log.d(TAG, document.getId() + " => " + document.getData());
+                        Log.d(TAG, document.getId() + " => " + document.getData());
 
                         highScores.add(document.toObject(HighScore.class));
                         Log.d(TAG, highScores.toString());
