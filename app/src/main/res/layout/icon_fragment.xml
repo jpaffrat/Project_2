@@ -5,7 +5,8 @@
     android:id="@+id/IconFragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IconFragment">
+    tools:context=".IconFragment"
+    android:background="@color/black">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -14,18 +15,119 @@
         tools:layout_conversion_absoluteHeight="731dp"
         tools:layout_conversion_absoluteWidth="411dp"
         tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="0dp"></androidx.camera.view.PreviewView>
+        tools:layout_editor_absoluteY="0dp">
+
+
+    </androidx.camera.view.PreviewView>
 
     <Button
         android:id="@+id/cameraButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:onClick="onCameraClicked"
         android:text="OpenCamera"
         app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="94dp" />
+
+    <ImageView
+        android:id="@+id/megamanView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
+        android:src="@drawable/megaman"
+        app:layout_constraintStart_toStartOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/yoshiView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="80dp"
+        android:clickable="true"
+        android:src="@drawable/yoshi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/marioView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="250dp"
+        android:clickable="true"
+        android:src="@drawable/mario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/customView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="80dp"
+        android:clickable="true"
+        android:src = "@drawable/custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="348dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:text="Choose Your Character"
+        android:textColor="@color/white"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/megamanText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Megaman"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/megamanView" />
+
+    <TextView
+        android:id="@+id/yoshiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="120dp"
+        android:text="Yoshi"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yoshiView" />
+
+    <TextView
+        android:id="@+id/marioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:text="Mario"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/marioView" />
+
+    <TextView
+        android:id="@+id/customText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="110dp"
+        android:text="Custom"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
