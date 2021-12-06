@@ -34,12 +34,20 @@
         app:srcCompat="@drawable/big_boulder" />
 
     <ImageView
+        android:id="@+id/char_select"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
         android:id="@+id/Player_id"
         android:layout_width="150dp"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/rocket_player" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -135,5 +143,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Player_id" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
