@@ -12,33 +12,34 @@
         android:id="@+id/Angry_Rock"
         android:layout_width="83dp"
         android:layout_height="91dp"
-        app:srcCompat="@drawable/angry_rock"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="240dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Fire"
+        app:srcCompat="@drawable/angry_rock" />
 
     <ImageView
         android:id="@+id/Fire"
         android:layout_width="50dp"
         android:layout_height="60dp"
-        app:srcCompat="@drawable/inkedmp_840x830_matte_f8f8f8_t_pad_1000x1000_f8f8f8_li"
-        tools:layout_editor_absoluteX="42dp"
-        tools:layout_editor_absoluteY="130dp" />
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:srcCompat="@drawable/pk_starstorm_grey_background" />
 
     <ImageView
         android:id="@+id/Big_boulder"
         android:layout_width="95dp"
         android:layout_height="90dp"
-        app:srcCompat="@drawable/big_boulder"
-        tools:layout_editor_absoluteX="300dp"
-        tools:layout_editor_absoluteY="211dp" />
+        app:layout_constraintStart_toEndOf="@+id/Angry_Rock"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:srcCompat="@drawable/big_boulder" />
 
     <ImageView
         android:id="@+id/Player_id"
         android:layout_width="150dp"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/rocket_player"
-        tools:layout_editor_absoluteX="134dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/rocket_player" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -131,7 +132,8 @@
         android:layout_width="75dp"
         android:layout_height="100dp"
         android:foreground="@color/teal_200"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="331dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Player_id" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

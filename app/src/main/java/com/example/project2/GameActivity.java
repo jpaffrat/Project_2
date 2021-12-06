@@ -20,6 +20,10 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// TODO Speed up guys with time // different difficulty algorithems
+// TODO Invincible once hit  - could flash
+// TODO Make the object fall at variing speeds and heights
+
 public class GameActivity extends AppCompatActivity {
 
     //Screen Size
@@ -39,10 +43,14 @@ public class GameActivity extends AppCompatActivity {
     //Positions
     private float RockX;
     private float RockY;
+    private float RockSpeedBonus;
     private float RollX;
     private float RollY;
+    private float RollSpeedBonus;
     private float FireObX;
     private float FireObY;
+    private float FireObSpeedBonus;
+    private float speed_increase;
 
     // Player
     private GestureDetector gestureDetector;
@@ -52,10 +60,13 @@ public class GameActivity extends AppCompatActivity {
     private float hitBoxY;
 
     //Score and live
-    private int lives = 3;
+    private int lives = 4;
     private long time_int;
     private long time_current;
     private long time_elapsed;
+    private long time_hit;
+    private long time_system;
+    private boolean Invincibility_on = false;
 
     // Initialize Class
     private Handler handler = new Handler();
@@ -136,22 +147,28 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void changePos() {
+        //Speed up as level progress
+        speed_increase = time_elapsed / 10;
+
         // move rock
-        RockY += 10;
+        RockY += 10 + speed_increase + RockSpeedBonus;
         if (Rock.getY() > screenHeight){
             RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
+            RockSpeedBonus = (float)Math.floor(Math.random() * 3);
             RockY = -Rock.getHeight();
         }
         // move Boulder
-        RollY += 10;
+        RollY += 10 + speed_increase + RollSpeedBonus;
         if (Roll.getY() > screenHeight){
             RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
+            RollSpeedBonus = (float)Math.floor(Math.random() * 3);
             RollY = -Roll.getHeight();
         }
 
-        FireObY += 10;
+        FireObY += 10 + speed_increase + FireObSpeedBonus;
         if (FireOb.getY() > screenHeight){
             FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
+            FireObSpeedBonus = (float)Math.floor(Math.random() * 3);
             FireObY = -FireOb.getHeight();
         }
 
@@ -190,9 +207,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void loseLife(){
-        lives -= 1;
+        if(!Invincibility_on){
+            lives -= 1;
+            Invincibility_on = true;
+            time_hit = System.currentTimeMillis()/100;
+            livesBoard.setText(String.format("%d", lives));
+            handler.postDelayed(Invincibility_invisible, 0);
+        }
 
-        livesBoard.setText(String.format("%d", lives));
+
 
 //        if(lives == 2){
 //            Life1.setVisibility(View.INVISIBLE);
@@ -206,59 +229,41 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public Runnable Invincibility_invisible = new Runnable() {
+        @Override
+        public void run() {
+            player.setVisibility(View.INVISIBLE);
+            time_system = System.currentTimeMillis()/100;
+            if(time_system - time_hit > 20){
+                handler.removeCallbacks(Invincibility_invisible);
+                handler.removeCallbacks(Invincibility_visible);
+                player.setVisibility(View.VISIBLE);
+                Invincibility_on = false;
+            }else{
+                handler.postDelayed(Invincibility_visible, 200);
+            }
+        }
+    };
+
+    public Runnable Invincibility_visible = new Runnable() {
+        @Override
+        public void run() {
+            player.setVisibility(View.VISIBLE);
+            time_system = System.currentTimeMillis()/100;
+            if(time_system - time_hit > 20){
+                handler.removeCallbacks(Invincibility_invisible);
+                handler.removeCallbacks(Invincibility_visible);
+                Invincibility_on = false;
+            }else{
+                handler.postDelayed(Invincibility_invisible, 200);
+            }
+        }
+    };
+
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             return gestureDetector.onTouchEvent(event);
         }
     };
-
-    /*
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            Log.d("TAG","onDown: ");
-            holding_item = true;
-
-            // don't return false here or else none of the other
-            // gestures will work
-            return true;
-        }
-
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            Log.i("TAG", "onSingleTapConfirmed: ");
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-            Log.i("TAG", "onLongPress: ");
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            Log.i("TAG", "onDoubleTap: ");
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
-            Log.i("TAG", "onScroll: ");
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-            Log.d("TAG", "onFling: ");
-            return true;
-        }
-
-    }
-
-     */
 }
