@@ -148,27 +148,29 @@ public class GameActivity extends AppCompatActivity {
 
     public void changePos() {
         //Speed up as level progress
-        speed_increase = time_elapsed / 10;
+        speed_increase = 30 - (2000 / (time_elapsed + 1));
+        if (speed_increase < 10)
+            speed_increase = 10;
 
         // move rock
-        RockY += 10 + speed_increase + RockSpeedBonus;
+        RockY += speed_increase + RockSpeedBonus;
         if (Rock.getY() > screenHeight){
             RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
-            RockSpeedBonus = (float)Math.floor(Math.random() * 3);
+            RockSpeedBonus = (float)Math.floor(Math.random() * 10);
             RockY = -Rock.getHeight();
         }
         // move Boulder
-        RollY += 10 + speed_increase + RollSpeedBonus;
+        RollY += speed_increase + RollSpeedBonus;
         if (Roll.getY() > screenHeight){
             RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
-            RollSpeedBonus = (float)Math.floor(Math.random() * 3);
+            RollSpeedBonus = (float)Math.floor(Math.random() * 10);
             RollY = -Roll.getHeight();
         }
 
-        FireObY += 10 + speed_increase + FireObSpeedBonus;
+        FireObY += speed_increase + FireObSpeedBonus;
         if (FireOb.getY() > screenHeight){
             FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
-            FireObSpeedBonus = (float)Math.floor(Math.random() * 3);
+            FireObSpeedBonus = (float)Math.floor(Math.random() * 10);
             FireObY = -FireOb.getHeight();
         }
 
@@ -214,8 +216,6 @@ public class GameActivity extends AppCompatActivity {
             livesBoard.setText(String.format("%d", lives));
             handler.postDelayed(Invincibility_invisible, 0);
         }
-
-
 
 //        if(lives == 2){
 //            Life1.setVisibility(View.INVISIBLE);
