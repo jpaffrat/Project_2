@@ -14,8 +14,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.project2.model.HighScore;
+import com.example.project2.util.FirebaseUtil;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +38,8 @@ public class GameActivity extends AppCompatActivity {
     private int screenWidth;
     private int screenHeight;
 
+    public FirebaseFirestore mFirestore2;
+
     //objects
     private ImageView Rock;
     private ImageView Roll;
@@ -38,7 +48,10 @@ public class GameActivity extends AppCompatActivity {
     private ImageView Life2;
     private ImageView Life3;
     private TextView scoreBoard;
+    private TextView prompt;
+    private EditText editTextUsername;
     private TextView livesBoard;
+    private Button Enter;
 
     //Positions
     private float RockX;
@@ -68,6 +81,9 @@ public class GameActivity extends AppCompatActivity {
     private long time_system;
     private boolean Invincibility_on = false;
 
+    private EditText editText;
+    private String user;
+
     // Initialize Class
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -94,6 +110,21 @@ public class GameActivity extends AppCompatActivity {
         RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
         RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
         FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
+
+        Enter = (Button)findViewById(R.id.Enter);
+        Enter.setVisibility(View.INVISIBLE);
+
+        prompt = (TextView)findViewById(R.id.Prompt);
+        prompt.setVisibility(View.INVISIBLE);
+
+        editTextUsername = (EditText)findViewById(R.id.editTextUsername);
+        editTextUsername.setVisibility(View.INVISIBLE);
+
+
+
+        FirebaseApp.initializeApp(this);
+        FirebaseFirestore.setLoggingEnabled(true);
+        mFirestore2 = FirebaseUtil.getFirestore();
 
         //Get screen Size
         WindowManager wm = getWindowManager();
@@ -217,15 +248,17 @@ public class GameActivity extends AppCompatActivity {
             handler.postDelayed(Invincibility_invisible, 0);
         }
 
-//        if(lives == 2){
-//            Life1.setVisibility(View.INVISIBLE);
-//        } else if ( lives == 1){
-//            Life2.setVisibility(View.INVISIBLE);
-//        } else {
-//            timer.cancel();
-//            Life3.setVisibility(View.INVISIBLE);
-//            //Do Dalton
-//        }
+
+
+        if(lives == 2){
+            Life1.setVisibility(View.INVISIBLE);
+        } else if ( lives == 1){
+            Life2.setVisibility(View.INVISIBLE);
+        } else {
+
+            Life3.setVisibility(View.INVISIBLE);
+            onGameOver();
+        }
 
     }
 
@@ -260,10 +293,45 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    private void onGameOver(){
+        timer.cancel();
+        prompt.setVisibility(View.VISIBLE);
+        prompt.setText("Game over, Type your name below");
+        Enter.setVisibility(View.VISIBLE);
+        editTextUsername.setVisibility(View.VISIBLE);
+
+
+    }
+
+    public void onEditTextUsername(View view){
+
+        editText = (EditText) findViewById(R.id.editTextUsername);
+        user = editText.getText().toString();
+        if(user.length() != 4){
+            prompt.setText("Please enter a 4 character name");
+        } else {
+            addHighScore(user, (int) time_elapsed);
+            recreate();
+        }
+
+
+    }
+
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             return gestureDetector.onTouchEvent(event);
         }
     };
+
+    public void addHighScore(String user, int score){
+        CollectionReference HighScores = mFirestore2.collection("HighScores");
+
+        user = user + "\t\t\t";
+        HighScore highScore = new HighScore();
+        highScore.setUser(user);
+        highScore.setScore(score);
+        HighScores.add(highScore);
+
+    }
 }
