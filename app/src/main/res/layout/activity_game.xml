@@ -104,26 +104,6 @@
                 android:textColor="@color/white"
                 android:textSize="34sp" />
 
-            <ImageView
-                android:id="@+id/Life1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
-
-            <ImageView
-                android:id="@+id/Life2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
-
-            <ImageView
-                android:id="@+id/Life3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                tools:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
         </LinearLayout>
     </LinearLayout>
 

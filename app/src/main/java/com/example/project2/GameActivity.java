@@ -44,9 +44,6 @@ public class GameActivity extends AppCompatActivity {
     private ImageView Rock;
     private ImageView Roll;
     private ImageView FireOb;
-    private ImageView Life1;
-    private ImageView Life2;
-    private ImageView Life3;
     private TextView scoreBoard;
     private TextView prompt;
     private EditText editTextUsername;
@@ -98,10 +95,6 @@ public class GameActivity extends AppCompatActivity {
 
         scoreBoard = (TextView)findViewById(R.id.Score_id);
         livesBoard = (TextView)findViewById(R.id.Lives_id);
-
-        Life1 = (ImageView)findViewById(R.id.Life1);
-        Life2 = (ImageView)findViewById(R.id.Life2);
-        Life3 = (ImageView)findViewById(R.id.Life3);
 
         Rock = (ImageView)findViewById(R.id.Angry_Rock);
         Roll = (ImageView)findViewById(R.id.Big_boulder);
@@ -167,7 +160,9 @@ public class GameActivity extends AppCompatActivity {
                 handler.post(new Runnable(){
                     @Override
                     public void run() {
-                        changePos();
+                        changePosRock();
+                        changePosRoll();
+                        changePosFire();
                         time_current = System.currentTimeMillis()/100;
                         time_elapsed = time_current - time_int;
                         scoreBoard.setText(String.format("%d", time_elapsed));
@@ -177,7 +172,7 @@ public class GameActivity extends AppCompatActivity {
         }, 0 , 20);
     }
 
-    public void changePos() {
+    public void changePosRock() {
         //Speed up as level progress
         speed_increase = 30 - (2000 / (time_elapsed + 1));
         if (speed_increase < 10)
@@ -239,6 +234,14 @@ public class GameActivity extends AppCompatActivity {
         FireOb.setY(FireObY);
     }
 
+    public void changePosRoll() {
+
+    }
+
+    public void changePosFire() {
+
+    }
+
     private void loseLife(){
         if(!Invincibility_on){
             lives -= 1;
@@ -248,15 +251,7 @@ public class GameActivity extends AppCompatActivity {
             handler.postDelayed(Invincibility_invisible, 0);
         }
 
-
-
-        if(lives == 2){
-            Life1.setVisibility(View.INVISIBLE);
-        } else if ( lives == 1){
-            Life2.setVisibility(View.INVISIBLE);
-        } else {
-
-            Life3.setVisibility(View.INVISIBLE);
+        if(lives <= 1){
             onGameOver();
         }
 
