@@ -3,6 +3,7 @@ package com.example.project2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
     public FirebaseFirestore mFirestore2;
 
     //objects
+    private ImageView mCharSelect;
     private ImageView Rock;
     private ImageView Roll;
     private ImageView FireOb;
@@ -92,6 +94,23 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        mCharSelect = (ImageView)findViewById(R.id.char_select);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            int charSelect = extras.getInt("char_sel");
+            Bitmap bitmap = extras.getParcelable("char_icon");
+            switch (charSelect){
+                case 1: mCharSelect.setImageDrawable(getResources().getDrawable(R.drawable.yoshi));
+                        break;
+                case 2: mCharSelect.setImageDrawable(getResources().getDrawable(R.drawable.mario));
+                        break;
+                case 3: mCharSelect.setImageDrawable(IconViewModel.custom);
+                        break;
+                default: mCharSelect.setImageDrawable(getResources().getDrawable(R.drawable.megaman));
+                         break;
+            }
+        }
+        mCharSelect.setX(100000);
 
         scoreBoard = (TextView)findViewById(R.id.Score_id);
         livesBoard = (TextView)findViewById(R.id.Lives_id);
@@ -135,6 +154,7 @@ public class GameActivity extends AppCompatActivity {
         //Move around player
         player = (ImageView) findViewById(R.id.Player_id);
         hitBox = (ImageView) findViewById(R.id.Hit_box_id);
+
         // gestureDetector = new GestureDetector(this, new MyGestureListener());
         // player.setOnTouchListener(touchListener);
         player.setOnTouchListener(new View.OnTouchListener() {
@@ -147,6 +167,9 @@ public class GameActivity extends AppCompatActivity {
                 hitBox.setX(hitBoxX);
                 hitBoxY = motionEvent.getRawY() - hitBox.getHeight() + 23;
                 hitBox.setY(hitBoxY);
+
+                mCharSelect.setX(motionEvent.getRawX() - mCharSelect.getWidth() / 2);
+                mCharSelect.setY(motionEvent.getRawY() - mCharSelect.getHeight() / 1);
                 return true;
             }
         });
@@ -261,11 +284,13 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             player.setVisibility(View.INVISIBLE);
+            mCharSelect.setVisibility(View.INVISIBLE);
             time_system = System.currentTimeMillis()/100;
             if(time_system - time_hit > 20){
                 handler.removeCallbacks(Invincibility_invisible);
                 handler.removeCallbacks(Invincibility_visible);
                 player.setVisibility(View.VISIBLE);
+                mCharSelect.setVisibility(View.VISIBLE);
                 Invincibility_on = false;
             }else{
                 handler.postDelayed(Invincibility_visible, 200);
@@ -277,6 +302,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             player.setVisibility(View.VISIBLE);
+            mCharSelect.setVisibility(View.VISIBLE);
             time_system = System.currentTimeMillis()/100;
             if(time_system - time_hit > 20){
                 handler.removeCallbacks(Invincibility_invisible);

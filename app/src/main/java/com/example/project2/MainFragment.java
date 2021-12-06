@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
-    private int char_sel = 1;
+    //private int char_sel = 1;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -53,7 +53,7 @@ public class MainFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),GameActivity.class);
-                intent.putExtra("char_sel", char_sel);
+                intent.putExtra("char_sel", IconViewModel.charSelect);
                 startActivity(intent);
             }
         });
