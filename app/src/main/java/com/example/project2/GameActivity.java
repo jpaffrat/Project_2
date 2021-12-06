@@ -29,6 +29,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// TODO Speed up guys with time // different difficulty algorithems
+// TODO Invincible once hit  - could flash
+// TODO Make the object fall at variing speeds and heights
+
 public class GameActivity extends AppCompatActivity {
 
     //Screen Size
@@ -71,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
     private float hitBoxY;
 
     //Score and live
-    private int lives = 3;
+    private int lives = 4;
     private long time_int;
     private long time_current;
     private long time_elapsed;
@@ -198,27 +202,29 @@ public class GameActivity extends AppCompatActivity {
 
     public void changePos() {
         //Speed up as level progress
-        speed_increase = time_elapsed / 10;
+        speed_increase = 30 - (2000 / (time_elapsed + 1));
+        if (speed_increase < 10)
+            speed_increase = 10;
 
         // move rock
-        RockY += 10 + speed_increase + RockSpeedBonus;
+        RockY += speed_increase + RockSpeedBonus;
         if (Rock.getY() > screenHeight){
             RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
-            RockSpeedBonus = (float)Math.floor(Math.random() * 3);
+            RockSpeedBonus = (float)Math.floor(Math.random() * 10);
             RockY = -Rock.getHeight();
         }
         // move Boulder
-        RollY += 10 + speed_increase + RollSpeedBonus;
+        RollY += speed_increase + RollSpeedBonus;
         if (Roll.getY() > screenHeight){
             RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
-            RollSpeedBonus = (float)Math.floor(Math.random() * 3);
+            RollSpeedBonus = (float)Math.floor(Math.random() * 10);
             RollY = -Roll.getHeight();
         }
 
-        FireObY += 10 + speed_increase + FireObSpeedBonus;
+        FireObY += speed_increase + FireObSpeedBonus;
         if (FireOb.getY() > screenHeight){
             FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
-            FireObSpeedBonus = (float)Math.floor(Math.random() * 3);
+            FireObSpeedBonus = (float)Math.floor(Math.random() * 10);
             FireObY = -FireOb.getHeight();
         }
 
@@ -354,52 +360,4 @@ public class GameActivity extends AppCompatActivity {
         HighScores.add(highScore);
 
     }
-    /*
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            Log.d("TAG","onDown: ");
-            holding_item = true;
-
-            // don't return false here or else none of the other
-            // gestures will work
-            return true;
-        }
-
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            Log.i("TAG", "onSingleTapConfirmed: ");
-            return true;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-            Log.i("TAG", "onLongPress: ");
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            Log.i("TAG", "onDoubleTap: ");
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
-            Log.i("TAG", "onScroll: ");
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-            Log.d("TAG", "onFling: ");
-            return true;
-        }
-
-    }
-
-     */
 }
