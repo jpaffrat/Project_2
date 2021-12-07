@@ -11,7 +11,9 @@
     <ImageView
         android:id="@+id/Angry_Rock"
         android:layout_width="83dp"
-        android:layout_height="91dp"
+        android:layout_height="85dp"
+        android:scaleX="1.025"
+        android:scaleY="1.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Fire"
         app:srcCompat="@drawable/angry_rock" />
@@ -27,8 +29,9 @@
 
     <ImageView
         android:id="@+id/Big_boulder"
-        android:layout_width="95dp"
-        android:layout_height="90dp"
+        android:layout_width="74dp"
+        android:layout_height="89dp"
+        android:scaleX="1.1"
         app:layout_constraintStart_toEndOf="@+id/Angry_Rock"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:srcCompat="@drawable/big_boulder" />
@@ -121,7 +124,7 @@
         android:foreground="@color/teal_200"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Player_id" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/editTextUsername"

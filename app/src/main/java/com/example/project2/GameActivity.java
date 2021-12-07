@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
     private float FireObY;
     private float FireObSpeedBonus;
     private float speed_increase;
-    private int charSelect;
+    private int DifSelect;
 
     // Player
     private GestureDetector gestureDetector;
@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
                 default: mCharSelect.setImageDrawable(getResources().getDrawable(R.drawable.megaman));
                          break;
             }
-            charSelect = extras.getInt("difficulty");
+            DifSelect = extras.getInt("difficulty");
         }
         mCharSelect.setX(100000);
 
@@ -196,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void changePosRock() {
         //Speed up as level progress
-        float speed_increase_var = charSelect * (30 - (2000 / (time_elapsed + 1)));
+        float speed_increase_var = DifSelect * (30 - (2000 / (time_elapsed + 1)));
         if (speed_increase_var > 10)
             speed_increase = speed_increase_var;
         else
@@ -271,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if(lives < 1){
-            onGameOver();
+           // onGameOver();
         }
 
     }
