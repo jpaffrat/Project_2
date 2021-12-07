@@ -273,7 +273,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if(lives < 1){
-           // onGameOver();
+           onGameOver();
         }
 
     }
