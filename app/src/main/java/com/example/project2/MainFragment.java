@@ -49,11 +49,31 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState){
 
-        Button button = (Button) getView().findViewById(R.id.Start_game_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button_easy = (Button) getView().findViewById(R.id.Start_game_easy);
+        Button button_medium = (Button) getView().findViewById(R.id.Start_game_medium);
+        Button button_hard = (Button) getView().findViewById(R.id.Start_game_hard);
+
+        button_easy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),GameActivity.class);
                 intent.putExtra("char_sel", IconViewModel.charSelect);
+                intent.putExtra("difficulty", 1);
+                startActivity(intent);
+            }
+        });
+        button_medium.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),GameActivity.class);
+                intent.putExtra("char_sel", IconViewModel.charSelect);
+                intent.putExtra("difficulty", 2);
+                startActivity(intent);
+            }
+        });
+        button_hard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),GameActivity.class);
+                intent.putExtra("char_sel", IconViewModel.charSelect);
+                intent.putExtra("difficulty", 2);
                 startActivity(intent);
             }
         });

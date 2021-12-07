@@ -63,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
     private float FireObY;
     private float FireObSpeedBonus;
     private float speed_increase;
+    private int charSelect;
 
     // Player
     private GestureDetector gestureDetector;
@@ -87,9 +88,6 @@ public class GameActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Timer timer = new Timer();
 
-    // dummy var / delete later
-    private boolean hit = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
                 default: mCharSelect.setImageDrawable(getResources().getDrawable(R.drawable.megaman));
                          break;
             }
+            charSelect = extras.getInt("difficulty");
         }
         mCharSelect.setX(100000);
 
@@ -197,37 +196,19 @@ public class GameActivity extends AppCompatActivity {
 
     public void changePosRock() {
         //Speed up as level progress
-        speed_increase = 30 - (2000 / (time_elapsed + 1));
-        if (speed_increase < 10)
+        float speed_increase_var = charSelect * (30 - (2000 / (time_elapsed + 1)));
+        if (speed_increase_var > 10)
+            speed_increase = speed_increase_var;
+        else
             speed_increase = 10;
 
         // move rock
-        RockY += speed_increase + RockSpeedBonus;
         if (Rock.getY() > screenHeight){
             RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
             RockSpeedBonus = (float)Math.floor(Math.random() * 10);
             RockY = -Rock.getHeight();
         }
-        // move Boulder
-        RollY += speed_increase + RollSpeedBonus;
-        if (Roll.getY() > screenHeight){
-            RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
-            RollSpeedBonus = (float)Math.floor(Math.random() * 10);
-            RollY = -Roll.getHeight();
-        }
-
-        FireObY += speed_increase + FireObSpeedBonus;
-        if (FireOb.getY() > screenHeight){
-            FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
-            FireObSpeedBonus = (float)Math.floor(Math.random() * 10);
-            FireObY = -FireOb.getHeight();
-        }
-
-        // Hit By Roll
-        if (hitBoxX < RollX + hitBox.getWidth() - 30 && hitBoxX + hitBox.getWidth() > RollX &&
-               hitBoxY < RollY + Roll.getHeight() - 20 && hitBoxY + hitBox.getHeight() > RollY){
-            loseLife();
-        }
+        RockY += speed_increase + RockSpeedBonus;
 
         // Hit by Rock
         if (hitBoxX < RockX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > RockX &&
@@ -235,34 +216,49 @@ public class GameActivity extends AppCompatActivity {
             loseLife();
         }
 
+        // Update position
+        Rock.setX(RockX);
+        Rock.setY(RockY);
+    }
+
+    public void changePosRoll() {
+        // move Boulder
+        if (Roll.getY() > screenHeight){
+            RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
+            RollSpeedBonus = (float)Math.floor(Math.random() * 10);
+            RollY = -Roll.getHeight();
+        }
+        RollY += speed_increase + RollSpeedBonus;
+
+        // Hit By Roll
+        if (hitBoxX < RollX + hitBox.getWidth() - 30 && hitBoxX + hitBox.getWidth() > RollX &&
+                hitBoxY < RollY + Roll.getHeight() - 20 && hitBoxY + hitBox.getHeight() > RollY){
+            loseLife();
+        }
+
+        // Update position
+        Roll.setX(RollX);
+        Roll.setY(RollY);
+    }
+
+    public void changePosFire() {
+        // Move fire
+        if (FireOb.getY() > screenHeight){
+            FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
+            FireObSpeedBonus = (float)Math.floor(Math.random() * 10);
+            FireObY = -FireOb.getHeight();
+        }
+        FireObY += speed_increase + FireObSpeedBonus;
+
         // Hit by Fire
         if (hitBoxX < FireObX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > FireObX &&
                 hitBoxY < FireObY + Roll.getHeight() && hitBoxY + hitBox.getHeight() > FireObY){
             loseLife();
         }
 
-
-        if (hit){
-            loseLife();
-        }
-
-//        RockX = screenWidth / 2;
-//        RockY = screenHeight / 2;
-
-        Rock.setX(RockX);
-        Rock.setY(RockY);
-        Roll.setX(RollX);
-        Roll.setY(RollY);
+        // Update position
         FireOb.setX(FireObX);
         FireOb.setY(FireObY);
-    }
-
-    public void changePosRoll() {
-
-    }
-
-    public void changePosFire() {
-
     }
 
     private void loseLife(){
@@ -274,7 +270,7 @@ public class GameActivity extends AppCompatActivity {
             handler.postDelayed(Invincibility_invisible, 0);
         }
 
-        if(lives <= 1){
+        if(lives < 1){
             onGameOver();
         }
 

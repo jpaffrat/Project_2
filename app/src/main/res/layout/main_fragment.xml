@@ -10,10 +10,36 @@
         android:layout_height="match_parent"
         android:text="Main" />
 
-    <Button
-        android:id="@+id/Start_game_button"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:text="Push to start the game" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Start_game_Text"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Push to start the game"
+            android:textAlignment="center"
+            android:textSize="34sp" />
+
+        <Button
+            android:id="@+id/Start_game_easy"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Easy" />
+
+        <Button
+            android:id="@+id/Start_game_medium"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Medium" />
+
+        <Button
+            android:id="@+id/Start_game_hard"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="Hard" />
+    </LinearLayout>
 
 </FrameLayout>
