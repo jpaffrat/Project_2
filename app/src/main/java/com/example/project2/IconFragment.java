@@ -139,7 +139,7 @@ public class IconFragment extends Fragment {
             @Override
             public void onClick(View view1) {
                 IconViewModel.charSelect=0;
-                MediaPlayer mediaPlayer1 =MediaPlayer.create(getContext(),R.raw.megaman);
+                MediaPlayer mediaPlayer1 = MediaPlayer.create(getContext(),R.raw.megaman);
                 mediaPlayer1.start();
                 mMegamanTextview.setVisibility(View.VISIBLE);
                 mYoshiTextView.setVisibility(View.INVISIBLE);
@@ -154,7 +154,7 @@ public class IconFragment extends Fragment {
             @Override
             public void onClick(View view2) {
                 IconViewModel.charSelect=1;
-                MediaPlayer mediaPlayer2 =MediaPlayer.create(getContext(),R.raw.yoshi);
+                MediaPlayer mediaPlayer2 = MediaPlayer.create(getContext(),R.raw.yoshi);
                 mediaPlayer2.start();
                 mMegamanTextview.setVisibility(View.INVISIBLE);
                 mYoshiTextView.setVisibility(View.VISIBLE);
@@ -169,7 +169,7 @@ public class IconFragment extends Fragment {
             @Override
             public void onClick(View view2) {
                 IconViewModel.charSelect=2;
-                MediaPlayer mediaPlayer3 =MediaPlayer.create(getContext(),R.raw.mario);
+                MediaPlayer mediaPlayer3 = MediaPlayer.create(getContext(),R.raw.mario);
                 mediaPlayer3.start();
                 mMegamanTextview.setVisibility(View.INVISIBLE);
                 mYoshiTextView.setVisibility(View.INVISIBLE);
@@ -184,7 +184,7 @@ public class IconFragment extends Fragment {
             @Override
             public void onClick(View view2) {
                 IconViewModel.charSelect=3;
-                MediaPlayer mediaPlayer4 =MediaPlayer.create(getContext(),R.raw.mii);
+                MediaPlayer mediaPlayer4 = MediaPlayer.create(getContext(),R.raw.mii);
                 mediaPlayer4.start();
                 mMegamanTextview.setVisibility(View.INVISIBLE);
                 mYoshiTextView.setVisibility(View.INVISIBLE);

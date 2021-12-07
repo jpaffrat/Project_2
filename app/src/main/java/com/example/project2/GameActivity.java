@@ -3,8 +3,10 @@ package com.example.project2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -131,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
         editTextUsername = (EditText)findViewById(R.id.editTextUsername);
         editTextUsername.setVisibility(View.INVISIBLE);
 
-
+        handler.postDelayed(Play_music,0);
 
         FirebaseApp.initializeApp(this);
         FirebaseFirestore.setLoggingEnabled(true);
@@ -276,6 +278,15 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    public Runnable Play_music = new Runnable() {
+        @Override
+        public void run() {
+            MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.main_theme_song);
+            mediaPlayer.start();
+            handler.postDelayed(Play_music,169000);
+        }
+    };
+
     public Runnable Invincibility_invisible = new Runnable() {
         @Override
         public void run() {
@@ -350,5 +361,14 @@ public class GameActivity extends AppCompatActivity {
         highScore.setScore(score);
         HighScores.add(highScore);
 
+    }
+
+    @Override
+    public void onPause(){
+        handler.removeCallbacks(Invincibility_invisible);
+        handler.removeCallbacks(Invincibility_visible);
+        handler.removeCallbacks(Play_music);
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }
