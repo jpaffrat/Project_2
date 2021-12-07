@@ -19,29 +19,32 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="135dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:onClick="onMainClicked"
         android:text="Main"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="135dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:onClick="onHighscoresClicked"
         android:text="Highscores"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toEndOf="@+id/button" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="135dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:onClick="onIconClicked"
         android:text="Icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
