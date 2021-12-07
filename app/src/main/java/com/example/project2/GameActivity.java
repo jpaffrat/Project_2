@@ -85,6 +85,7 @@ public class GameActivity extends AppCompatActivity {
 
     private EditText editText;
     private String user;
+    private MediaPlayer mediaPlayer;
 
     // Initialize Class
     private Handler handler = new Handler();
@@ -281,7 +282,7 @@ public class GameActivity extends AppCompatActivity {
     public Runnable Play_music = new Runnable() {
         @Override
         public void run() {
-            MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.main_theme_song);
+            mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.main_theme_song);
             mediaPlayer.start();
             handler.postDelayed(Play_music,169000);
         }
@@ -323,6 +324,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void onGameOver(){
         timer.cancel();
+        handler.removeCallbacks(Play_music);
+        mediaPlayer.pause();
         prompt.setVisibility(View.VISIBLE);
         prompt.setText("Game over, Type your name below");
         Enter.setVisibility(View.VISIBLE);
@@ -361,14 +364,5 @@ public class GameActivity extends AppCompatActivity {
         highScore.setScore(score);
         HighScores.add(highScore);
 
-    }
-
-    @Override
-    public void onPause(){
-        handler.removeCallbacks(Invincibility_invisible);
-        handler.removeCallbacks(Invincibility_visible);
-        handler.removeCallbacks(Play_music);
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
     }
 }
