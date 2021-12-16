@@ -40,6 +40,9 @@ import java.util.ArrayList;
  * more efficient implementation of a Firestore RecyclerView Adapter.
  */
 
+/**
+ * sample code taken from Firebase lab
+ */
 public abstract class FirestoreAdapter<VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> implements EventListener<QuerySnapshot>{
 

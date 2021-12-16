@@ -28,27 +28,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * The main activity for the app
+ */
+
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
-
-    public FirebaseFirestore mFirestore2;
-    public int test;
-    public static Drawable customImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //firestore
-        FirebaseApp.initializeApp(this);
-        FirebaseFirestore.setLoggingEnabled(true);
-        mFirestore2 = FirebaseUtil.getFirestore();
-
-
-        // new HighscoreFragment().addHighScore("hello",1 , mFirestore);
     }
 
     @Override
@@ -61,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new IconFragment());
     }
     public void onHighscoresClicked(View view){
-        addHighScore("test", 80);
         loadFragment(new HighscoreFragment());
     }
     public void onMainClicked(View view){
@@ -79,18 +70,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop(){
         super.onStop();
 
-
-
-    }
-
-    public void addHighScore(String user, int score){
-        CollectionReference HighScores = mFirestore2.collection("HighScores");
-
-        user = user + "\t\t\t";
-        HighScore highScore = new HighScore();
-        highScore.setUser(user);
-        highScore.setScore(score);
-        HighScores.add(highScore);
 
     }
 

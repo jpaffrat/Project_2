@@ -1,5 +1,9 @@
 package com.example.project2.model;
 
+
+/**
+ * an object used to pass in highscores to the firestore daatabase
+ */
 public class HighScore {
 
     public String user;

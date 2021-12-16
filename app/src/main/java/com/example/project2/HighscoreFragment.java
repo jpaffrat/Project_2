@@ -37,15 +37,26 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * fragment for displaying the highscore. Pulls from Firestore database
+ */
 public class HighscoreFragment extends Fragment {
 
+
+    /**
+     * mViewmodel: an unused viemodel
+     *  mtextView: the textview to display to
+     *  highScores: an array to store the high scores
+     *  mFirestore: the firestore database
+     *  highScoreString: string used to display the data
+     *  hold: a int to keep track of iterations
+     */
     private HighscoreViewModel mViewModel;
     private TextView mtextView;
     private List<HighScore> highScores = new ArrayList<HighScore>();
-    public FirebaseFirestore mFirestore;
-    private Query mQuery;
+    private FirebaseFirestore mFirestore;
     private String highScoreString = "";
-    int hold;
+    private int hold;
 
 
 
@@ -54,6 +65,13 @@ public class HighscoreFragment extends Fragment {
         return new HighscoreFragment();
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -61,6 +79,10 @@ public class HighscoreFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -68,17 +90,36 @@ public class HighscoreFragment extends Fragment {
 
     }
 
+    /**
+     * Gets the highscore list from firestore and displays it in a textview
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState){
+
+        /**
+         * the textView used
+         */
         mtextView = (TextView) getView().findViewById(R.id.textView);
 
+        /**
+         * Initializing the firebase and assigning a collection
+         */
         FirebaseApp.initializeApp(new MainActivity());
         FirebaseFirestore.setLoggingEnabled(true);
         mFirestore = FirebaseUtil.getFirestore();
-
         CollectionReference HighScores = mFirestore.collection("HighScores");
+
+        /**
+         * set params to 0 or null
+         */
         hold = 0;
         highScoreString = "";
+
+        /**
+         * pulls high score list and displays the top 10 highscores to the user
+         */
         HighScores.orderBy("score", Query.Direction.DESCENDING).limit(10).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -104,21 +145,6 @@ public class HighscoreFragment extends Fragment {
             }
         });
 
-        System.out.println("hope\n" + highScoreString);
     }
-
-    public void addHighScore(String user, int score){
-        CollectionReference HighScores = mFirestore.collection("HighScores");
-
-        HighScore highScore = new HighScore();
-        highScore.setUser(user);
-        highScore.setScore(score);
-        HighScores.add(highScore);
-
-    }
-
-
-
-
 
 }

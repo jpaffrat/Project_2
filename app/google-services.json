@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "391716036622",
-    "project_id": "cpre388-project2-bfbe8",
-    "storage_bucket": "cpre388-project2-bfbe8.appspot.com"
+    "project_number": "880043931232",
+    "project_id": "cpreproject",
+    "storage_bucket": "cpreproject.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:391716036622:android:d34ba980c7f18093e69c5f",
+        "mobilesdk_app_id": "1:880043931232:android:3218e97e4f0732d4ab3505",
         "android_client_info": {
           "package_name": "com.example.project2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "391716036622-t517dft77e4vbskl7cpjjegs5ta57ptc.apps.googleusercontent.com",
+          "client_id": "880043931232-u71oh1bvq2r088ko8nkbsrskp075281t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD6D_KcSH9yfTPDb-ZLUUsszKZJRgRwCzY"
+          "current_key": "AIzaSyBCw_FiBwyYriEYuZbLoC5kHsbr_nTpP90"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "391716036622-t517dft77e4vbskl7cpjjegs5ta57ptc.apps.googleusercontent.com",
+              "client_id": "880043931232-u71oh1bvq2r088ko8nkbsrskp075281t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
