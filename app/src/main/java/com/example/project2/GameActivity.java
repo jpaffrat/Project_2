@@ -31,19 +31,28 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Timer;
 import java.util.TimerTask;
 
-// TODO Speed up guys with time // different difficulty algorithems
-// TODO Invincible once hit  - could flash
-// TODO Make the object fall at variing speeds and heights
 
+/**
+ * The activity which handels all gameplay aspects of the app
+ */
 public class GameActivity extends AppCompatActivity {
 
-    //Screen Size
+    /**
+     * Screen Size
+     */
+
     private int screenWidth;
     private int screenHeight;
 
+
+    /**
+     * Firebase initialize
+     */
     public FirebaseFirestore mFirestore2;
 
-    //objects
+    /**
+     * objects
+     */
     private ImageView mCharSelect;
     private ImageView Rock;
     private ImageView Roll;
@@ -54,7 +63,9 @@ public class GameActivity extends AppCompatActivity {
     private TextView livesBoard;
     private Button Enter;
 
-    //Positions
+    /**
+     * Positions
+     */
     private float RockX;
     private float RockY;
     private float RockSpeedBonus;
@@ -67,14 +78,18 @@ public class GameActivity extends AppCompatActivity {
     private float speed_increase;
     private int DifSelect;
 
-    // Player
+    /**
+     * Player
+     */
     private GestureDetector gestureDetector;
     private ImageView player;
     private ImageView hitBox;
     private float hitBoxX;
     private float hitBoxY;
 
-    //Score and live
+    /**
+     * Score and lives
+     */
     private int lives = 4;
     private long time_int;
     private long time_current;
@@ -83,18 +98,31 @@ public class GameActivity extends AppCompatActivity {
     private long time_system;
     private boolean Invincibility_on = false;
 
+    /**
+     * text and media initialization
+     */
     private EditText editText;
     private String user;
     private MediaPlayer mediaPlayer;
 
-    // Initialize Class
+    /**
+     * Initialize Class
+     */
     private Handler handler = new Handler();
     private Timer timer = new Timer();
 
+    /**
+     * create initial game state and parse in settings.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        /**
+         * selects the character
+         */
         mCharSelect = (ImageView)findViewById(R.id.char_select);
         Bundle extras = getIntent().getExtras();
         if (extras != null){
@@ -114,6 +142,9 @@ public class GameActivity extends AppCompatActivity {
         }
         mCharSelect.setX(100000);
 
+        /**
+         * initialize all the UI elements
+         */
         scoreBoard = (TextView)findViewById(R.id.Score_id);
         livesBoard = (TextView)findViewById(R.id.Lives_id);
 
@@ -134,13 +165,22 @@ public class GameActivity extends AppCompatActivity {
         editTextUsername = (EditText)findViewById(R.id.editTextUsername);
         editTextUsername.setVisibility(View.INVISIBLE);
 
+        /**
+         * start music
+         */
         handler.postDelayed(Play_music,0);
 
+        /**
+         * initialize firebase
+         */
         FirebaseApp.initializeApp(this);
         FirebaseFirestore.setLoggingEnabled(true);
         mFirestore2 = FirebaseUtil.getFirestore();
 
-        //Get screen Size
+        /**
+         * Get screen Size
+         */
+
         WindowManager wm = getWindowManager();
         Display disp = wm.getDefaultDisplay();
         Point size = new Point();
@@ -148,17 +188,23 @@ public class GameActivity extends AppCompatActivity {
         screenHeight = size.y;
         screenWidth = size.x;
 
-        //Move to out of screen
+        /**
+         * Move to out of screen
+         */
         Rock.setX(-80.0f);
         Rock.setY(-80.0f);
         FireOb.setY(-80.0f);
 
-        //Move around player
+        /**
+         * Move around player
+         */
         player = (ImageView) findViewById(R.id.Player_id);
         hitBox = (ImageView) findViewById(R.id.Hit_box_id);
 
-        // gestureDetector = new GestureDetector(this, new MyGestureListener());
-        // player.setOnTouchListener(touchListener);
+
+        /**
+         * create listener to handle player movement
+         */
         player.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -177,7 +223,9 @@ public class GameActivity extends AppCompatActivity {
         });
 
 
-        //Start the Timer
+        /**
+         * Start the Timer
+         */
         time_int = System.currentTimeMillis()/100;
         timer.schedule(new TimerTask() {
             @Override
@@ -197,15 +245,23 @@ public class GameActivity extends AppCompatActivity {
         }, 0 , 20);
     }
 
+    /**
+     * manages speed and position of the rock
+     */
     public void changePosRock() {
-        //Speed up as level progress
+
+        /**
+         * Speed up as level progress
+         */
         float speed_increase_var = DifSelect * (30 - (2000 / (time_elapsed + 1)));
         if (speed_increase_var > 10)
             speed_increase = speed_increase_var;
         else
             speed_increase = 10;
 
-        // move rock
+        /**
+         * move rock
+         */
         if (Rock.getY() > screenHeight){
             RockX = (float)Math.floor(Math.random() * (screenWidth - Rock.getWidth()));
             RockSpeedBonus = (float)Math.floor(Math.random() * 10);
@@ -213,19 +269,29 @@ public class GameActivity extends AppCompatActivity {
         }
         RockY += speed_increase + RockSpeedBonus;
 
-        // Hit by Rock
+        /**
+         * Hit by Rock
+         */
         if (hitBoxX < RockX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > RockX &&
                hitBoxY < RockY + Roll.getHeight() && hitBoxY + hitBox.getHeight() > RockY){
             loseLife();
         }
 
-        // Update position
+        /**
+         * Update position
+         */
         Rock.setX(RockX);
         Rock.setY(RockY);
     }
 
+    /**
+     * manages speed and movement of the boulder
+     */
     public void changePosRoll() {
-        // move Boulder
+
+        /**
+         * move Boulder
+         */
         if (Roll.getY() > screenHeight){
             RollX = (float)Math.floor(Math.random() * (screenWidth - Roll.getWidth()));
             RollSpeedBonus = (float)Math.floor(Math.random() * 10);
@@ -233,19 +299,29 @@ public class GameActivity extends AppCompatActivity {
         }
         RollY += speed_increase + RollSpeedBonus;
 
-        // Hit By Roll
+        /**
+         * Hit By Roll
+         */
         if (hitBoxX < RollX + hitBox.getWidth() - 30 && hitBoxX + hitBox.getWidth() > RollX &&
                 hitBoxY < RollY + Roll.getHeight() - 20 && hitBoxY + hitBox.getHeight() > RollY){
             loseLife();
         }
 
-        // Update position
+        /**
+         * Update position
+         */
         Roll.setX(RollX);
         Roll.setY(RollY);
     }
 
+    /**
+     * manages speed and direction of the fire
+     */
     public void changePosFire() {
-        // Move fire
+
+        /**
+         * Move fire
+         */
         if (FireOb.getY() > screenHeight){
             FireObX = (float)Math.floor(Math.random() * (screenWidth - FireOb.getWidth()));
             FireObSpeedBonus = (float)Math.floor(Math.random() * 10);
@@ -253,18 +329,29 @@ public class GameActivity extends AppCompatActivity {
         }
         FireObY += speed_increase + FireObSpeedBonus;
 
-        // Hit by Fire
+        /**
+         * Hit by Fire
+         */
         if (hitBoxX < FireObX + hitBox.getWidth() && hitBoxX + hitBox.getWidth() > FireObX &&
                 hitBoxY < FireObY + Roll.getHeight() && hitBoxY + hitBox.getHeight() > FireObY){
             loseLife();
         }
 
-        // Update position
+        /**
+         * Update position
+         */
         FireOb.setX(FireObX);
         FireOb.setY(FireObY);
     }
 
+    /**
+     * triggered when running into an object
+     * if invincible, nothing happens
+     * if not invincible, lose a life and become invincible
+     * end game if lives hits 0
+     */
     private void loseLife(){
+
         if(!Invincibility_on){
             lives -= 1;
             Invincibility_on = true;
@@ -279,6 +366,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * simple runnable to play music throught the game
+     */
     public Runnable Play_music = new Runnable() {
         @Override
         public void run() {
@@ -288,6 +378,10 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * set player to invisible for a set time
+     * bounces between Invincibility_visible method to achieve flickering effect
+     */
     public Runnable Invincibility_invisible = new Runnable() {
         @Override
         public void run() {
@@ -306,6 +400,10 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * set player to visible for a set time
+     * bounces between Invincibility_invisible method to achieve flickering effect
+     */
     public Runnable Invincibility_visible = new Runnable() {
         @Override
         public void run() {
@@ -322,6 +420,9 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * stops the game and creates edit_text box for user to interact with
+     */
     private void onGameOver(){
         timer.cancel();
         handler.removeCallbacks(Play_music);
@@ -331,9 +432,13 @@ public class GameActivity extends AppCompatActivity {
         Enter.setVisibility(View.VISIBLE);
         editTextUsername.setVisibility(View.VISIBLE);
 
-
     }
 
+    /**
+     * prompts user to enter a username
+     * name is sent to addHighScore method and activity is recreated
+     * @param view
+     */
     public void onEditTextUsername(View view){
 
         editText = (EditText) findViewById(R.id.editTextUsername);
@@ -348,6 +453,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * potentially unused? not entirely sure (dalton commenting, didn't work on this part)
+     */
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -355,6 +463,11 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * adds high score to the firebase
+     * @param user the username inputed from onEditTextUsername
+     * @param score the time survived in the game
+     */
     public void addHighScore(String user, int score){
         CollectionReference HighScores = mFirestore2.collection("HighScores");
 
