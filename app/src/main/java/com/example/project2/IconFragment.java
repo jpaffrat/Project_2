@@ -51,7 +51,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-
+/**
+ * fragment that handles the choosing of which character will appear in the game
+ */
 public class IconFragment extends Fragment {
     public ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private IconViewModel mViewModel;
@@ -81,6 +83,11 @@ public class IconFragment extends Fragment {
         return inflater.inflate(R.layout.icon_fragment, container, false);
     }
 
+    /**
+     * handles the picture taking
+     * Creates a bitmap from the camera preview, this is easier than using the takePicture() function
+     * @param view
+     */
     public void onCameraClicked(View view){
         //mPreviewView.setVisibility(View.VISIBLE);
         test=mPreviewView.getBitmap();
@@ -88,8 +95,11 @@ public class IconFragment extends Fragment {
     }
 
 
-
-
+    /**
+     * sets up the preview and attaches it to the surface view on the fragment,
+     * allowing the user to see their camera
+     * @param cameraProvider
+     */
     public void bindPreview(@NonNull ProcessCameraProvider cameraProvider){
         Preview preview = new Preview.Builder()
                 .build();
@@ -103,12 +113,14 @@ public class IconFragment extends Fragment {
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(IconViewModel.class);
         // TODO: Use the ViewModel
     }
+
 
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState){
@@ -133,6 +145,13 @@ public class IconFragment extends Fragment {
         buttonDisplay = (TextView) getView().findViewById(R.id.cameraButton);
         buttonDisplay.setText("Take Custom Image");
 
+        /**
+         * All of the onClick functions for the four characters
+         * Each onClick will:
+         * hide the text of the unselected characters
+         * Play a sound effect for the character
+         * sets the variable for character selected for use in the game
+         */
         //megaClick
         mMegaman = (ImageView) getView().findViewById(R.id.megamanView);
         mMegaman.setOnClickListener(new View.OnClickListener() {
@@ -194,6 +213,13 @@ public class IconFragment extends Fragment {
         });
         //customClick
 
+        /**
+         * handles the camera preview through camerax
+         * When the user tries to take a picture for a custom character, preview is created and
+         * displayed to the screen, while hiding all of the other UI
+         * Keeps one button on the screen allowing the user to take a save a picture for their
+         * custom character
+         */
         //Camera
         openCamera = (Button) getView().findViewById(R.id.cameraButton);
         openCamera.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +273,10 @@ public class IconFragment extends Fragment {
         //camera
     }
 
+    /**
+     * sets the variable for character select in the viewmodel
+     * Highlights the text for the character selected so that the user knows which character they have selected
+     */
     public void characterSelect(){
         int select=IconViewModel.charSelect;
         switch (select){
@@ -261,6 +291,11 @@ public class IconFragment extends Fragment {
         }
     }
 
+    /**
+     * saves all image objects to the viewmodel
+     * also reinitializes all UI that disappears when the camera preview is activated
+     * @param bitmap
+     */
     public void saveImage(Bitmap bitmap){
         Drawable drawable = new BitmapDrawable(bitmap);
         IconViewModel.custom = drawable;

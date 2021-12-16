@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new MainFragment());
     }
 
+    /**
+     * handles the fragment navigation
+     * all fragments are used through this activity in a fragment holder
+     * loads a new fragment into the fragment holder when the user selects this
+     * @param view
+     */
     public void onIconClicked(View view){
         loadFragment(new IconFragment());
     }

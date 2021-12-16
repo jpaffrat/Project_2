@@ -22,6 +22,10 @@ import android.widget.Button;
 
 import java.util.concurrent.ExecutionException;
 
+/**
+ * fragment for the main screen to start the game and select difficulty level
+ */
+
 public class MainFragment extends Fragment {
 
     private MainViewModel mViewModel;
@@ -46,6 +50,13 @@ public class MainFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    /**
+     * handles the on click for starting the game
+     * each onClick will start the game activity
+     * passes by intent the character selected to play the game and the difficulty level
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view,@Nullable Bundle savedInstanceState){
 
